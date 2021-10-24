@@ -994,7 +994,7 @@ local GUIbind = GUI.CreateGUIBind()
 local teleportfunc = game:GetService("Players").LocalPlayer.OnTeleport:Connect(function(State)
     if State == Enum.TeleportState.Started then
 		GuiLibrary["SaveSettings"]()
-        queueteleport('shared.VapeSwitchServers = true wait(1) loadstring(readfile("engovape/NewMainScript.lua"))()')
+        queueteleport('shared.VapeSwitchServers = true wait(1) loadstring(game:HttpGet("https://raw.githubusercontent.com/joeengo/VapeV4ForRoblox/main/NewMainScript.lua", true))())')
     end
 end)
 
