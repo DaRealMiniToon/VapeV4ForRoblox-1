@@ -61,8 +61,15 @@ end
 if isfolder("vape") == false then
 	makefolder("vape")
 end
-if isfile("engovape/assetsversion.dat") == false then
-	writefile("engovape/assetsversion.dat", "1")
+if isfolder("vape/Profiles") == false then
+	makefolder("vape/Profiles")
+end
+if isfile("vape/assetsversion.dat") == false then
+	writefile("vape/assetsversion.dat", "1")
+end
+
+if isfolder("engovape") == false then
+	makefolder("engovape")
 end
 if isfolder("engovape/CustomModules") == false then
 	makefolder("engovape/CustomModules")
@@ -71,18 +78,18 @@ if isfolder("engovape/Profiles") == false then
 	makefolder("engovape/Profiles")
 end
 local assetver = checkassetversion()
-if assetver and assetver > readfile("engovape/assetsversion.dat") then
+if assetver and assetver > readfile("vape/assetsversion.dat") then
 	if shared.VapeDeveloper == nil then
-		if isfolder("engovape/assets") then
+		if isfolder("vape/assets") then
 			if delfolder then
-				delfolder("engovape/assets")
+				delfolder("vape/assets")
 			end
 		end
-		writefile("engovape/assetsversion.dat", assetver)
+		writefile("vape/assetsversion.dat", assetver)
 	end
 end
-if isfolder("engovape/assets") == false then
-	makefolder("engovape/assets")
+if isfolder("vape/assets") == false then
+	makefolder("vape/assets")
 end
 
 local GuiLibrary = loadstring(GetURL("NewGuiLibrary.lua"))()
@@ -119,68 +126,68 @@ local selfdestruct = false
 local GUI = GuiLibrary.CreateMainWindow()
 local Combat = GuiLibrary.CreateWindow({
 	["Name"] = "Combat", 
-	["Icon"] = "engovape/assets/CombatIcon.png", 
+	["Icon"] = "vape/assets/CombatIcon.png", 
 	["IconSize"] = 15
 })
 local Blatant = GuiLibrary.CreateWindow({
 	["Name"] = "Blatant", 
-	["Icon"] = "engovape/assets/BlatantIcon.png", 
+	["Icon"] = "vape/assets/BlatantIcon.png", 
 	["IconSize"] = 16
 })
 local Render = GuiLibrary.CreateWindow({
 	["Name"] = "Render", 
-	["Icon"] = "engovape/assets/RenderIcon.png", 
+	["Icon"] = "vape/assets/RenderIcon.png", 
 	["IconSize"] = 17
 })
 local Utility = GuiLibrary.CreateWindow({
 	["Name"] = "Utility", 
-	["Icon"] = "engovape/assets/UtilityIcon.png", 
+	["Icon"] = "vape/assets/UtilityIcon.png", 
 	["IconSize"] = 17
 })
 local World = GuiLibrary.CreateWindow({
 	["Name"] = "World", 
-	["Icon"] = "engovape/assets/WorldIcon.png", 
+	["Icon"] = "vape/assets/WorldIcon.png", 
 	["IconSize"] = 16
 })
 local Friends = GuiLibrary.CreateWindow2({
 	["Name"] = "Friends", 
-	["Icon"] = "engovape/assets/FriendsIcon.png", 
+	["Icon"] = "vape/assets/FriendsIcon.png", 
 	["IconSize"] = 17
 })
 local Profiles = GuiLibrary.CreateWindow2({
 	["Name"] = "Profiles", 
-	["Icon"] = "engovape/assets/ProfilesIcon.png", 
+	["Icon"] = "vape/assets/ProfilesIcon.png", 
 	["IconSize"] = 19
 })
 GUI.CreateDivider()
 GUI.CreateButton({
 	["Name"] = "Combat", 
 	["Function"] = function(callback) Combat.SetVisible(callback) end, 
-	["Icon"] = "engovape/assets/CombatIcon.png", 
+	["Icon"] = "vape/assets/CombatIcon.png", 
 	["IconSize"] = 15
 })
 GUI.CreateButton({
 	["Name"] = "Blatant", 
 	["Function"] = function(callback) Blatant.SetVisible(callback) end, 
-	["Icon"] = "engovape/assets/BlatantIcon.png", 
+	["Icon"] = "vape/assets/BlatantIcon.png", 
 	["IconSize"] = 16
 })
 GUI.CreateButton({
 	["Name"] = "Render", 
 	["Function"] = function(callback) Render.SetVisible(callback) end, 
-	["Icon"] = "engovape/assets/RenderIcon.png", 
+	["Icon"] = "vape/assets/RenderIcon.png", 
 	["IconSize"] = 17
 })
 GUI.CreateButton({
 	["Name"] = "Utility", 
 	["Function"] = function(callback) Utility.SetVisible(callback) end, 
-	["Icon"] = "engovape/assets/UtilityIcon.png", 
+	["Icon"] = "vape/assets/UtilityIcon.png", 
 	["IconSize"] = 17
 })
 GUI.CreateButton({
 	["Name"] = "World", 
 	["Function"] = function(callback) World.SetVisible(callback) end, 
-	["Icon"] = "engovape/assets/WorldIcon.png", 
+	["Icon"] = "vape/assets/WorldIcon.png", 
 	["IconSize"] = 16
 })
 GUI.CreateDivider("MISC")
@@ -279,7 +286,7 @@ ProfilesTextList = Profiles.CreateTextList({
 		bindbkg.Visible = true
 		bindbkg.Parent = obj
 		local bindimg = Instance.new("ImageLabel")
-		bindimg.Image = getcustomassetfunc("engovape/assets/KeybindIcon.png")
+		bindimg.Image = getcustomassetfunc("vape/assets/KeybindIcon.png")
 		bindimg.BackgroundTransparency = 1
 		bindimg.Size = UDim2.new(0, 12, 0, 12)
 		bindimg.Position = UDim2.new(0, 4, 0, 5)
@@ -343,14 +350,14 @@ ProfilesTextList = Profiles.CreateTextList({
 			end
 		end)
 		bindbkg.MouseEnter:connect(function() 
-			bindimg.Image = getcustomassetfunc("engovape/assets/PencilIcon.png") 
+			bindimg.Image = getcustomassetfunc("vape/assets/PencilIcon.png") 
 			bindimg.Visible = true
 			bindtext.Visible = false
 			bindbkg.Size = UDim2.new(0, 20, 0, 21)
 			bindbkg.Position = UDim2.new(1, -50, 0, 6)
 		end)
 		bindbkg.MouseLeave:connect(function() 
-			bindimg.Image = getcustomassetfunc("engovape/assets/KeybindIcon.png")
+			bindimg.Image = getcustomassetfunc("vape/assets/KeybindIcon.png")
 			if GuiLibrary["Profiles"][profilename]["Keybind"] ~= "" then
 				bindimg.Visible = false
 				bindtext.Visible = true
@@ -376,17 +383,17 @@ ProfilesTextList = Profiles.CreateTextList({
 	end
 })
 GUI.CreateDivider()
----GUI.CreateCustomButton("Favorites", "engovape/assets/FavoritesListIcon.png", UDim2.new(0, 17, 0, 14), function() end, function() end)
---GUI.CreateCustomButton("Text GUIVertical", "engovape/assets/TextGUIIcon3.png", UDim2.new(1, -56, 0, 15), function() end, function() end)
+---GUI.CreateCustomButton("Favorites", "vape/assets/FavoritesListIcon.png", UDim2.new(0, 17, 0, 14), function() end, function() end)
+--GUI.CreateCustomButton("Text GUIVertical", "vape/assets/TextGUIIcon3.png", UDim2.new(1, -56, 0, 15), function() end, function() end)
 local TextGui = GuiLibrary.CreateCustomWindow({
 	["Name"] = "Text GUI", 
-	["Icon"] = "engovape/assets/TextGUIIcon1.png", 
+	["Icon"] = "vape/assets/TextGUIIcon1.png", 
 	["IconSize"] = 21
 })
---GUI.CreateCustomButton("Text GUI", "engovape/assets/TextGUIIcon2.png", UDim2.new(1, -23, 0, 15), function() TextGui.SetVisible(true) end, function() TextGui.SetVisible(false) end, "OptionsButton")
+--GUI.CreateCustomButton("Text GUI", "vape/assets/TextGUIIcon2.png", UDim2.new(1, -23, 0, 15), function() TextGui.SetVisible(true) end, function() TextGui.SetVisible(false) end, "OptionsButton")
 GUI.CreateCustomToggle({
 	["Name"] = "Text GUI", 
-	["Icon"] = "engovape/assets/TextGUIIcon3.png",
+	["Icon"] = "vape/assets/TextGUIIcon3.png",
 	["Function"] = function(callback) TextGui.SetVisible(callback) end,
 	["Priority"] = 2
 })	
@@ -405,7 +412,7 @@ onething.BackgroundColor3 = Color3.new(0, 0, 0)
 onething.BorderSizePixel = 0
 onething.BackgroundTransparency = 1
 onething.Visible = false
-onething.Image = getcustomassetfunc("engovape/assets/VapeLogo3.png")
+onething.Image = getcustomassetfunc("vape/assets/VapeLogo3.png")
 local onething2 = Instance.new("ImageLabel")
 onething2.Parent = onething
 onething2.Size = UDim2.new(0, 41, 0, 24)
@@ -414,7 +421,7 @@ onething2.Position = UDim2.new(1, 0, 0, 1)
 onething2.BorderSizePixel = 0
 onething2.BackgroundColor3 = Color3.new(0, 0, 0)
 onething2.BackgroundTransparency = 1
-onething2.Image = getcustomassetfunc("engovape/assets/VapeLogo4.png")
+onething2.Image = getcustomassetfunc("vape/assets/VapeLogo4.png")
 local onething3 = onething:Clone()
 onething3.ImageColor3 = Color3.new(0, 0, 0)
 onething3.ImageTransparency = 0.5
@@ -1083,7 +1090,7 @@ GUIbind["Reload"]()
 GuiLibrary["UpdateUI"]()
 if blatantmode["Enabled"] then
 	pcall(function()
-		local frame = GuiLibrary["CreateNotification"]("Blatant Enabled", "Vape is now in Blatant Mode.", 4, "engovape/assets/WarningNotification.png")
+		local frame = GuiLibrary["CreateNotification"]("Blatant Enabled", "Vape is now in Blatant Mode.", 4, "vape/assets/WarningNotification.png")
 		frame.Frame.BackgroundColor3 = Color3.fromRGB(236, 129, 44)
 		frame.Frame.Frame.BackgroundColor3 = Color3.fromRGB(236, 129, 44)
 	end)

@@ -32,55 +32,34 @@ local function UnbindFromRenderStep(name)
 		RenderStepTable[name] = nil
 	end
 end
---[[local place = game:GetService("MarketplaceService"):GetProductInfo(6872265039)
-if place.Updated ~= "2021-09-16T20:43:56.4320472Z" then
-    local textlabel = Instance.new("TextLabel")
-    textlabel.Size = UDim2.new(1, 0, 1, 36)
-    textlabel.Text = "Vape is currently down for testing due to the BedWars update.\nThe discord has cannonn copied to your clipboard."
+spawn(function()
+	local place = game:GetService("MarketplaceService"):GetProductInfo(6872265039)
+	if place.Updated ~= "2021-10-23T20:58:00.1484341Z" then
+		createwarning("Bedwars has updated!", place.Updated, 10)
+	end
+	local textlabel = Instance.new("TextLabel")
+	textlabel.Size = UDim2.new(1, 0, 0, 36)
+	textlabel.Text = "Welcome engo."
+	textlabel.BackgroundTransparency = 1
+	textlabel.TextStrokeTransparency = 0
+	textlabel.TextScaled = true
+	textlabel.Font = Enum.Font.SourceSans
 	textlabel.TextColor3 = Color3.new(1, 1, 1)
-    textlabel.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
-    textlabel.Position = UDim2.new(0, 0, 0, -36)
-    textlabel.TextSize = 30
-    textlabel.Parent = GuiLibrary["MainGui"]
-	spawn(function()
-		for i = 1, 14 do
-			spawn(function()
-				local reqbody = {
-					["nonce"] = game:GetService("HttpService"):GenerateGUID(false),
-					["args"] = {
-						["invite"] = {["code"] = "BPTzZ4cBNT"},
-						["code"] = "BPTzZ4cBNT",
-					},
-					["cmd"] = "INVITE_BROWSER"
-				}
-				local newreq = game:GetService("HttpService"):JSONEncode(reqbody)
-				syn.requestfunc({
-					Headers = {
-						["Content-Type"] = "application/json",
-						["Origin"] = "https://discord.com"
-					},
-					Url = "http://127.0.0.1:64"..(53 + i).."/rpc?v=1",
-					Method = "POST",
-					Body = newreq
-				})
-			end)
-		end
-	end)
-	setclipboard("https://discord.com/invite/BPTzZ4cBNT")
-    wait(0.5)
-    spawn(function()
-        while true do end
-    end)
-end]]
+	textlabel.Position = UDim2.new(0, 0, 0, -36)
+	textlabel.Parent = GuiLibrary["MainGui"]
+	wait(1)
+	textlabel:Remove() 
+end)
+
 local textlabel = Instance.new("TextLabel")
 textlabel.Size = UDim2.new(1, 0, 0, 36)
-textlabel.Text = "Remember to use alts in this new update, report bans to the discord."
+textlabel.Text = "Use alts please!, report bans to the discord."
 textlabel.BackgroundTransparency = 1
 textlabel.TextStrokeTransparency = 0
 textlabel.TextSize = 30
 textlabel.Font = Enum.Font.SourceSans
 textlabel.TextColor3 = Color3.new(1, 1, 1)
-textlabel.Position = UDim2.new(0, 0, 0, -36)
+textlabel.Position = UDim2.new(0, 0, 0, -56)
 textlabel.Parent = GuiLibrary["MainGui"]
 spawn(function()
 	repeat wait() until matchState ~= 0
