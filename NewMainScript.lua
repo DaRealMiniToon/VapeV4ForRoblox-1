@@ -87,8 +87,8 @@ end
 if isfolder("engovape/CustomModules") == false then
 	makefolder("engovape/CustomModules")
 end
-if isfolder("engovape/Profiles") == false then
-	makefolder("engovape/Profiles")
+if isfolder("vape/profiles") == false then
+	makefolder("vape/profiles")
 end
 local assetver = checkassetversion()
 if assetver and assetver > readfile("vape/assetsversion.dat") then
@@ -1024,7 +1024,7 @@ GUI.CreateButton2({
 	["Name"] = "RESET CURRENT PROFILE", 
 	["Function"] = function()
 		GuiLibrary["SelfDestruct"]()
-		delfile("engovape/Profiles/"..(GuiLibrary["CurrentProfile"] == "default" and "" or GuiLibrary["CurrentProfile"])..game.PlaceId..".vapeprofile")
+		delfile("vape/profiles/"..(GuiLibrary["CurrentProfile"] == "default" and "" or GuiLibrary["CurrentProfile"])..game.PlaceId..".vapeprofile")
 		shared.VapeSwitchServers = true
 		shared.VapeOpenGui = true
 		loadstring(GetURL("NewMainScript.lua"))()
