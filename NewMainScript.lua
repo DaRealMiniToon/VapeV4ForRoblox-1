@@ -1,5 +1,9 @@
 repeat wait() until game:IsLoaded() == true
 
+local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport
+local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request
+local getasset = getsynasset or getcustomasset
+
 local function GetURL(scripturl)
 	if isfile("engovape/"..scripturl) then
 	return readfile("engovape/"..scripturl)
@@ -16,14 +20,10 @@ local function GetURL(scripturl)
 	end
 end
 
-local getasset = getsynasset or getcustomasset
 if getasset == nil then
 	getgenv().getcustomasset = function(location) return "rbxasset://"..location end
 	getasset = getgenv().getcustomasset
 end
-local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport
-local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request
-
 local function checkpublicrepo(id)
 	local req = requestfunc({
 		Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/CustomModules/"..id..".vape",
