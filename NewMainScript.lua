@@ -1,8 +1,21 @@
 repeat wait() until game:IsLoaded() == true
 
 local function GetURL(scripturl)
+	if isfile("engovape/"..scripturl) then
 	return readfile("engovape/"..scripturl)
+	else
+		local req = requestfunc({
+			Url = "https://raw.githubusercontent.com/joeengo/VapeV4ForRoblox/main/"..scripturl,
+			Method = "GET"
+		})
+		if req.StatusCode == 200 then
+			return req.Body
+		else
+			error(scripturl.." is not a valid file!")
+		end
+	end
 end
+
 local getasset = getsynasset or getcustomasset
 if getasset == nil then
 	getgenv().getcustomasset = function(location) return "rbxasset://"..location end
