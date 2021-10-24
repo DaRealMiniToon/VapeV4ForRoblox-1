@@ -21,7 +21,19 @@ local api = {
 }
 
 local function GetURL(scripturl)
+	if isfile("engovape/"..scripturl) then
 	return readfile("engovape/"..scripturl)
+	else
+		local req = requestfunc({
+			Url = "https://raw.githubusercontent.com/joeengo/VapeV4ForRoblox/main/"..scripturl,
+			Method = "GET"
+		})
+		if req.StatusCode == 200 then
+			return req.Body
+		else
+			error(scripturl.." is not a valid file!")
+		end
+	end
 end
 
 local function getprofile()
