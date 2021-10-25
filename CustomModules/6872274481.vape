@@ -56,29 +56,18 @@ spawn(function()
 	if place.Updated ~= "2021-10-24T23:15:55.516701Z" then
 		createwarning("Bedwars has updated!", place.Updated, 10)
 	end
-	local textlabel = Instance.new("TextLabel")
-	textlabel.Size = UDim2.new(1, 0, 0, 36)
-	textlabel.Text = "Welcome engo."
-	textlabel.BackgroundTransparency = 1
-	textlabel.TextStrokeTransparency = 0
-	textlabel.TextScaled = true
-	textlabel.Font = Enum.Font.SourceSans
-	textlabel.TextColor3 = Color3.new(1, 1, 1)
-	textlabel.Position = UDim2.new(0, 0, 0, -36)
-	textlabel.Parent = GuiLibrary["MainGui"]
-	wait(1)
-	textlabel:Remove() 
 end)
 
 local textlabel = Instance.new("TextLabel")
 textlabel.Size = UDim2.new(1, 0, 0, 36)
-textlabel.Text = "Use alts please!, report bans to the discord."
+textlabel.Text = "Hello, "..lplr.Name.." enjoy engovape"
 textlabel.BackgroundTransparency = 1
 textlabel.TextStrokeTransparency = 0
 textlabel.TextSize = 30
 textlabel.Font = Enum.Font.SourceSans
 textlabel.TextColor3 = Color3.new(1, 1, 1)
-textlabel.Position = UDim2.new(0, 0, 0, -16)
+textlabel.Position = UDim2.new(0.5, 0, 0, 820)
+textlabel.AnchorPoint = Vector2.new(0.5, 0.5)
 textlabel.Parent = GuiLibrary["MainGui"]
 spawn(function()
 	repeat wait() until matchState ~= 0
@@ -622,6 +611,14 @@ local function vischeck(pos, pos2, ignore)
 	return not unpack(vistab)
 end
 
+local function isJumping()
+	if lplr.Character.Humanoid.Jump then
+		return true
+	else
+		return false
+	end
+end
+
 local function GetAllNearestHumanoidToPosition(distance, amount)
 	local returnedplayer = {}
 	local currentamount = 0
@@ -1004,3 +1001,8 @@ local notifications = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"]
 	["Function"]= function(callback) notifications["Enabled"] = callback end,
 	["HoverText"] = "Sends you a notification when certain actions happen"
 })
+
+
+runcode(function()
+	
+end)
