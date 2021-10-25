@@ -163,6 +163,16 @@ local function getwool()
 	return nil
 end
 
+local function getmineralamount(arg)
+	for i5, v5 in pairs(bedwars["getInventory"](lplr)["items"]) do
+		if v5["itemType"]:match(arg) then
+			return v5["amount"]
+		end
+	end	
+	return nil
+end
+
+
 local function getBed(color)
 	for i,v in pairs(bedwars["BedTable"]) do
 		if v and v:FindFirstChild("Covers") and v.Covers.BrickColor == color then
@@ -729,55 +739,242 @@ CinematicGui = Cinematic.CreateToggle({
 	["Default"] = true
 })
 
-GuiLibrary["RemoveObject"]("HealthOptionsButton")
-local HealthText = Instance.new("TextLabel")
-HealthText.Font = Enum.Font.SourceSans
-HealthText.TextSize = 20
-HealthText.Text = "100 HP"
-HealthText.Position = UDim2.new(0.5, 0, 0.5, 70)
-HealthText.BackgroundTransparency = 1
-HealthText.TextColor3 = Color3.fromRGB(255, 0, 0)
-HealthText.Size = UDim2.new(0, 0, 0, 0)
-HealthText.Visible = false
-HealthText.Parent = GuiLibrary["MainGui"]
+runcode(function()
+	GuiLibrary["RemoveObject"]("HealthOptionsButton")
+	local UserInfoFrame = Instance.new("Frame", GuiLibrary["MainGui"])
+	UserInfoFrame.Size = UDim2.new(0, 100, 0, 200)
+	UserInfoFrame.Position = UDim2.new(0.5, 0, 0.625, 0)
+	UserInfoFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+	UserInfoFrame.Transparency = 1
 
-local WoolText = Instance.new("TextLabel")
-WoolText.Font = Enum.Font.SourceSans
-WoolText.TextSize = 20
-WoolText.Text = "0 WOOL"
-WoolText.Position = UDim2.new(0.5, 0, 0.5, 90)
-WoolText.BackgroundTransparency = 1
-WoolText.TextColor3 = Color3.fromRGB(0, 81, 255)
-WoolText.Size = UDim2.new(0, 0, 0, 0)
-WoolText.Visible = false
-WoolText.Parent = GuiLibrary["MainGui"]
+	local UserInfoListLayout = Instance.new("UIListLayout", UserInfoFrame)
 
+	local HealthText = Instance.new("TextLabel")
+	HealthText.Font = Enum.Font.SourceSans
+	HealthText.TextSize = 20
+	HealthText.Text = "100 HP"
+	HealthText.Position = UDim2.new(0.5, 0, 0.605, 0)
+	HealthText.AnchorPoint = Vector2.new(0.5, 0.5)
+	HealthText.BackgroundTransparency = 1
+	HealthText.TextColor3 = Color3.fromRGB(255, 0, 0)
+	HealthText.Size = UDim2.new(0, 100, 0, 20)
+	HealthText.Visible = false
+	HealthText.Parent = UserInfoFrame
+	HealthText.TextStrokeColor3 = Color3.new(0,0,0)
+	HealthText.TextStrokeTransparency = 0.1
+	
+	local WoolText = Instance.new("TextLabel")
+	WoolText.Font = Enum.Font.SourceSans
+	WoolText.TextSize = 20
+	WoolText.Text = "0 WOOL"
+	WoolText.Position = UDim2.new(0.5, 0, 0.5, 90)
+	WoolText.AnchorPoint = Vector2.new(0.5, 0.5)
+	WoolText.BackgroundTransparency = 1
+	WoolText.TextColor3 = Color3.fromRGB(255, 136, 0)
+	WoolText.Size = UDim2.new(0, 100, 0, 20)
+	WoolText.Visible = false
+	WoolText.Parent = UserInfoFrame
+	WoolText.TextStrokeColor3 = Color3.new(0,0,0)
+	WoolText.TextStrokeTransparency = 0.1
+	
+	local EmerText = Instance.new("TextLabel")
+	EmerText.Font = Enum.Font.SourceSans
+	EmerText.TextSize = 20
+	EmerText.Text = "0 EMERALD"
+	EmerText.Position = UDim2.new(0.5, 0, 0.5, 0)
+	EmerText.AnchorPoint = Vector2.new(0.5, 0.5)
+	EmerText.BackgroundTransparency = 1
+	EmerText.TextColor3 = Color3.fromRGB(92, 255, 119)
+	EmerText.Size = UDim2.new(0, 100, 0, 20)
+	EmerText.Visible = false
+	EmerText.Parent = UserInfoFrame
+	EmerText.TextStrokeColor3 = Color3.new(0,0,0)
+	EmerText.TextStrokeTransparency = 0.1
 
-local uiinfo = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
-	["Name"] = "UserInfo", 
-	["Function"] = function(callback) 
-		if callback then
-			HealthText.Visible = true
-			WoolText.Visible = true
-			BindToRenderStep("uinfo", 1, function()
-				if isAlive() then
-					local wool, woolamt = getwool()
-					if woolamt == nil then
-						WoolText.Text = "0 WOOL"
-					else
-						WoolText.Text = tostring(woolamt).." WOOL"
+	local DiamText = Instance.new("TextLabel")
+	DiamText.Font = Enum.Font.SourceSans
+	DiamText.TextSize = 20
+	DiamText.Text = "0 DIAMOND"
+	DiamText.Position = UDim2.new(0.5, 0, 0.5, 0)
+	DiamText.AnchorPoint = Vector2.new(0.5, 0.5)
+	DiamText.BackgroundTransparency = 1
+	DiamText.TextColor3 = Color3.fromRGB(64, 185, 255)
+	DiamText.Size = UDim2.new(0, 100, 0, 20)
+	DiamText.Visible = false
+	DiamText.Parent = UserInfoFrame
+	DiamText.TextStrokeColor3 = Color3.new(0,0,0)
+	DiamText.TextStrokeTransparency = 0.1
+
+	local IronText = Instance.new("TextLabel")
+	IronText.Font = Enum.Font.SourceSans
+	IronText.TextSize = 20
+	IronText.Text = "0 IRON"
+	IronText.Position = UDim2.new(0.5, 0, 0.5, 0)
+	IronText.AnchorPoint = Vector2.new(0.5, 0.5)
+	IronText.BackgroundTransparency = 1
+	IronText.TextColor3 = Color3.fromRGB(194, 194, 194)
+	IronText.Size = UDim2.new(0, 100, 0, 20)
+	IronText.Visible = false
+	IronText.Parent = UserInfoFrame
+	IronText.TextStrokeColor3 = Color3.new(0,0,0)
+	IronText.TextStrokeTransparency = 0.1
+
+	local uiinfo = {["Enabled"] = false}
+	local uiinfoiron = {["Enabled"] = false}
+	local uiinfowool = {["Enabled"] = false}
+	local uiinfohealth = {["Enabled"] = false}
+	local uiinfodiam = {["Enabled"] = false}
+	local uiinfoemer = {["Enabled"] = false}
+	local uiinfo = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
+		["Name"] = "UserInfo", 
+		["Function"] = function(callback) 
+			if callback then
+				print(callback, uiinfoiron["Enabled"], uiinfowool["Enabled"], uiinfohealth["Enabled"])
+				EmerText.Visible = uiinfoemer["Enabled"]
+				DiamText.Visible = uiinfodiam["Enabled"]
+				IronText.Visible = uiinfoiron["Enabled"]
+				HealthText.Visible = uiinfohealth["Enabled"]
+				WoolText.Visible = uiinfowool["Enabled"]
+				BindToRenderStep("uinfo", 1, function()
+					if isAlive() then
+						if uiinfoiron["Enabled"] then
+							local ironamt = getmineralamount("iron")
+							if ironamt == nil then 
+								IronText.Text = "0 IRON"
+							else
+								IronText.Text = tostring(ironamt).." IRON"
+							end
+						else
+							IronText.Visible = false
+						end
+
+						if uiinfodiam["Enabled"] then
+							local diamamt = getmineralamount("diamond")
+							if diamamt == nil then 
+								DiamText.Text = "0 DIAMOND"
+							else
+								DiamText.Text = tostring(diamamt).." DIAMOND"
+							end
+						else
+							DiamText.Visible = false
+						end
+
+						if uiinfoemer["Enabled"] then
+							local amt = getmineralamount("emerald")
+							if amt == nil then 
+								EmerText.Text = "0 EMERALD"
+							else
+								EmerText.Text = tostring(amt).." EMERALD"
+							end
+						else
+							EmerText.Visible = false
+						end
+
+						if uiinfowool["Enabled"] then
+							local wool, woolamt = getwool()
+							if woolamt == nil then
+								WoolText.Text = "0 WOOL"
+							else
+								WoolText.Text = tostring(woolamt).." WOOL"
+							end
+						else
+							WoolText.Visible = false
+						end
+
+						if uiinfohealth["Enabled"] then
+							HealthText.Text = tostring(math.round(lplr.Character.Humanoid.Health)).." HP"
+						else
+							HealthText.Visible = false
+						end
 					end
-					HealthText.Text = tostring(math.round(lplr.Character.Humanoid.Health)).." HP"
-				end
-			end)
-		else
-			HealthText.Visible = false
-			WoolText.Visible = false
-			UnbindFromRenderStep("uinfo")
-		end
-	end,
-	["HoverText"] = "Displays health & wool in the center of your screen."
-})
+				end)
+			else
+				IronText.Visible = false
+				HealthText.Visible = false
+				WoolText.Visible = false
+				EmerText.Visible = false
+				DiamText.Visible = false
+				UnbindFromRenderStep("uinfo")
+			end
+		end,
+		["HoverText"] = "Displays health & wool in the center of your screen."
+	})
+
+
+	local uiinfohealth = uiinfo.CreateToggle({
+		["Name"] = "HP",
+		["Function"] = function(callback)
+			HealthText.Visible = callback
+			uiinfohealth["Enabled"] = callback
+			if uiinfo["Enabled"] and isAlive() and callback then 
+				HealthText.Visible = true
+			else
+				HealthText.Visible = false
+			end
+		end,
+		["Default"] = true
+	})
+	local uiinfowool = uiinfo.CreateToggle({
+		["Name"] = "Wool",
+		["Function"] = function(callback)
+			WoolText.Visible = callback
+			uiinfowool["Enabled"] = callback
+			if uiinfo["Enabled"] and isAlive() and callback then 
+				WoolText.Visible = true
+			else
+				WoolText.Visible = false
+			end
+		end,
+		["Default"] = true
+	})
+
+	local uiinfoemer = uiinfo.CreateToggle({
+		["Name"] = "Emerald",
+		["Function"] = function(callback)
+			EmerText.Visible = callback
+			uiinfoemer["Enabled"] = callback
+			if uiinfo["Enabled"] and isAlive() and callback then 
+				EmerText.Visible = true
+			else
+				EmerText.Visible = false
+			end
+		end,
+		["Default"] = true
+	})
+
+	local uiinfodiam = uiinfo.CreateToggle({
+		["Name"] = "Diamond",
+		["Function"] = function(callback)
+			DiamText.Visible = callback
+			uiinfodiam["Enabled"] = callback
+			if uiinfo["Enabled"] and isAlive() and callback then 
+				DiamText.Visible = true
+			else
+				DiamText.Visible = false
+			end
+		end,
+		["Default"] = true
+	})
+
+	local uiinfoiron = uiinfo.CreateToggle({
+		["Name"] = "Iron",
+		["Function"] = function(callback)
+			IronText.Visible = callback
+			uiinfoiron["Enabled"] = callback
+			if uiinfo["Enabled"] and isAlive() and callback then 
+				IronText.Visible = true
+			else
+				IronText.Visible = false
+			end
+		end,
+		["Default"] = true
+	})
+end)
+
+
+
+
+
 local bedphrases = {"some retard broke ur bed", "yolo", "going bedless", "u only need 1 life right?", "1 life is enough", "watch out, 1 life left","go get em"}
 local killphrases = {"L to","assassinated","destroyed","rip","annihilated","obliterated","killed","get down","death successfully","skill issue","L noobie","gg ez","u mad","get sh*t on","garbage","get ez'ed","finessed"}
 local notifications = {["Enabled"] = false}
