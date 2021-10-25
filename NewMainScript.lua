@@ -1091,6 +1091,8 @@ end
 --private support: 
 if pcall(function() readfile("vapeprivate/CustomModules/"..game.PlaceId..".vape") end) then
 	loadstring(readfile("vapeprivate/CustomModules/"..game.PlaceId..".vape"))()
+else
+	print("no private ;-;")
 end
 
 if pcall(function() readfile("engovape/CustomModules/"..game.PlaceId..".vape") end) and isDev then
