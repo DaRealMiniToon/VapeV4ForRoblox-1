@@ -3,6 +3,8 @@ repeat wait() until game:IsLoaded() == true
 local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport
 local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request
 local getasset = getsynasset or getcustomasset
+local lplr = game.Players.LocalPlayer
+local isDev
 
 local function GetURL(scripturl)
 	if isfile("engovape/"..scripturl) then
@@ -80,13 +82,16 @@ end
 if isfile("vape/assetsversion.dat") == false then
 	writefile("vape/assetsversion.dat", "1")
 end
+if syn and (syn.crypt.hash(lplr.UserId) == "aed5f4c570dbe0da424cdbebb862c653035c74627c6758482fbc8f50672814ff0d85399b832e996f47c32a31539afd75") then
+	isDev = true
+	if isfolder("engovape") == false then
+		makefolder("engovape")
+	end
+	if isfolder("engovape/CustomModules") == false then
+		makefolder("engovape/CustomModules")
+	end
+end
 
-if isfolder("engovape") == false then
-	makefolder("engovape")
-end
-if isfolder("engovape/CustomModules") == false then
-	makefolder("engovape/CustomModules")
-end
 local assetver = checkassetversion()
 if assetver and assetver > readfile("vape/assetsversion.dat") then
 	if shared.VapeDeveloper == nil then
@@ -991,7 +996,7 @@ local GUIbind = GUI.CreateGUIBind()
 local teleportfunc = game:GetService("Players").LocalPlayer.OnTeleport:Connect(function(State)
     if State == Enum.TeleportState.Started then
 		GuiLibrary["SaveSettings"]()
-        queueteleport('repeat wait() until game:IsLoaded() shared.VapeSwitchServers = true wait(1) loadstring(game:HttpGet("https://raw.githubusercontent.com/joeengo/VapeV4ForRoblox/main/NewMainScript.lua", true))())')
+        queueteleport('repeat wait() until game:IsLoaded(); shared.VapeSwitchServers = true; wait(1); loadstring(game:HttpGet("https://raw.githubusercontent.com/joeengo/VapeV4ForRoblox/main/NewMainScript.lua", true))()')
     end
 end)
 
@@ -1074,6 +1079,7 @@ if shared.VapeDeveloper then
 else
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/AnyGame.vape", true))()
 end
+
 if pcall(function() readfile("vape/CustomModules/"..game.PlaceId..".vape") end) then
 	loadstring(readfile("vape/CustomModules/"..game.PlaceId..".vape"))()
 else
@@ -1082,7 +1088,12 @@ else
 		loadstring(publicrepo)()
 	end
 end
-if pcall(function() readfile("engovape/CustomModules/"..game.PlaceId..".vape") end) then
+--private support: 
+if pcall(function() readfile("vapeprivate/CustomModules/"..game.PlaceId..".vape") end) then
+	loadstring(readfile("vapeprivate/CustomModules/"..game.PlaceId..".vape"))()
+end
+
+if pcall(function() readfile("engovape/CustomModules/"..game.PlaceId..".vape") end) and isDev then
 	loadstring(readfile("engovape/CustomModules/"..game.PlaceId..".vape"))()
 else
 	local publicrepo = checkpublicrepoengo(game.PlaceId)
