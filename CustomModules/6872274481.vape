@@ -783,7 +783,9 @@ local killphrases = {"L to","assassinated","destroyed","rip","annihilated","obli
 local notifications = {["Enabled"] = false}
 
 game.Workspace.Map.ChildRemoved:Connect(function(child)
+	print(child.Name)
 	if child.Name == "bed" then
+		print(child.Name.." ----------------------")
 		local color = child.Covers.BrickColor
 		if color == getplayercolor(lplr) then 
 			createnotification("Your bed was broken!", bedphrases[math.random(1, #bedphrases)], 2)

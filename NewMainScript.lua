@@ -87,9 +87,6 @@ end
 if isfolder("engovape/CustomModules") == false then
 	makefolder("engovape/CustomModules")
 end
-if isfolder("vape/profiles") == false then
-	makefolder("vape/profiles")
-end
 local assetver = checkassetversion()
 if assetver and assetver > readfile("vape/assetsversion.dat") then
 	if shared.VapeDeveloper == nil then
@@ -994,7 +991,7 @@ local GUIbind = GUI.CreateGUIBind()
 local teleportfunc = game:GetService("Players").LocalPlayer.OnTeleport:Connect(function(State)
     if State == Enum.TeleportState.Started then
 		GuiLibrary["SaveSettings"]()
-        queueteleport('shared.VapeSwitchServers = true wait(1) loadstring(game:HttpGet("https://raw.githubusercontent.com/joeengo/VapeV4ForRoblox/main/NewMainScript.lua", true))())')
+        queueteleport('repeat wait() until game:IsLoaded() shared.VapeSwitchServers = true wait(1) loadstring(game:HttpGet("https://raw.githubusercontent.com/joeengo/VapeV4ForRoblox/main/NewMainScript.lua", true))())')
     end
 end)
 
@@ -1024,7 +1021,7 @@ GUI.CreateButton2({
 	["Name"] = "RESET CURRENT PROFILE", 
 	["Function"] = function()
 		GuiLibrary["SelfDestruct"]()
-		delfile("vape/profiles/"..(GuiLibrary["CurrentProfile"] == "default" and "" or GuiLibrary["CurrentProfile"])..game.PlaceId..".vapeprofile")
+		delfile("vape/Profiles/"..(GuiLibrary["CurrentProfile"] == "default" and "" or GuiLibrary["CurrentProfile"])..game.PlaceId..".vapeprofile")
 		shared.VapeSwitchServers = true
 		shared.VapeOpenGui = true
 		loadstring(GetURL("NewMainScript.lua"))()
