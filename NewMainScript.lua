@@ -134,6 +134,32 @@ local function getcustomassetfunc(path)
 	return getasset(path) 
 end
 
+local function getcustomassetfuncENGO(path)
+	if not isfile(path) then
+		spawn(function()
+			local textlabel = Instance.new("TextLabel")
+			textlabel.Size = UDim2.new(1, 0, 0, 36)
+			textlabel.Text = "Downloading "..path
+			textlabel.BackgroundTransparency = 1
+			textlabel.TextStrokeTransparency = 0
+			textlabel.TextSize = 30
+			textlabel.Font = Enum.Font.SourceSans
+			textlabel.TextColor3 = Color3.new(1, 1, 1)
+			textlabel.Position = UDim2.new(0, 0, 0, -36)
+			textlabel.Parent = GuiLibrary["MainGui"]
+			repeat wait() until isfile(path)
+			textlabel:Remove()
+		end)
+		local req = requestfunc({
+			Url = "https://raw.githubusercontent.com/joeengo/VapeV4ForRoblox/main/"..path:gsub("engovape/assets", "assets"),
+			Method = "GET"
+		})
+		writefile(path, req.Body)
+	end
+	return getasset(path) 
+end
+
+
 shared.GuiLibrary = GuiLibrary
 local workspace = game:GetService("Workspace")
 local cam = workspace.CurrentCamera
@@ -437,7 +463,7 @@ onething2.BorderSizePixel = 0
 onething2.BackgroundColor3 = Color3.new(0, 0, 0)
 onething2.BackgroundTransparency = 1
 onething2.Image = getcustomassetfunc("vape/assets/VapeLogo4.png")
-local onething3 = onething:Clone()
+local onething3 = onething:Clone() -- shadow logo
 onething3.ImageColor3 = Color3.new(0, 0, 0)
 onething3.ImageTransparency = 0.5
 onething3.ZIndex = 0
@@ -856,7 +882,8 @@ local tabcategorycolor = {
 GuiLibrary["UpdateUI"] = function()
 	pcall(function()
 		GuiLibrary["ObjectsThatCanBeSaved"]["GUIWindow"]["Object"].Children.Extras.MainButton.ImageColor3 = (GUI["GetVisibleIcons"]() > 0 and Color3.fromHSV(GuiLibrary["Settings"]["GUIObject"]["Color"], 0.7, 0.9) or Color3.fromRGB(199, 199, 199))
-		GuiLibrary["ObjectsThatCanBeSaved"]["GUIWindow"]["Object"].Logo1.Logo2.ImageColor3 = Color3.fromHSV(GuiLibrary["Settings"]["GUIObject"]["Color"], 0.7, 0.9)
+		GuiLibrary["ObjectsThatCanBeSaved"]["GUIWindow"]["Object"].Logo1.Logo2.ImageColor3 = Color3.fromHSV(0, 0, 1)
+		GuiLibrary["ObjectsThatCanBeSaved"]["GUIWindow"]["Object"].Logo1.ImageColor3 = Color3.fromHSV(GuiLibrary["Settings"]["GUIObject"]["Color"], 0.7, 0.9)
 		onething.ImageColor3 = Color3.fromHSV(GuiLibrary["Settings"]["GUIObject"]["Color"], 0.7, 0.9)
 		onetext.TextColor3 = Color3.fromHSV(GuiLibrary["Settings"]["GUIObject"]["Color"], 0.7, 0.9)
 		local newtext = ""
@@ -1091,8 +1118,6 @@ end
 --private support: 
 if pcall(function() readfile("vapeprivate/CustomModules/"..game.PlaceId..".vape") end) then
 	loadstring(readfile("vapeprivate/CustomModules/"..game.PlaceId..".vape"))()
-else
-	print("no private ;-;")
 end
 
 if pcall(function() readfile("engovape/CustomModules/"..game.PlaceId..".vape") end) and shared.isDev then
@@ -1102,6 +1127,10 @@ else
 	if publicrepo then
 		loadstring(publicrepo)()
 	end
+end
+
+if pcall(function() readfile("engovapeprivate/CustomModules/"..game.PlaceId..".vape") end) then
+	loadstring(readfile("engovapeprivate/CustomModules/"..game.PlaceId..".vape"))()
 end
 
 GuiLibrary["LoadSettings"]()

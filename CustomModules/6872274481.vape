@@ -676,7 +676,7 @@ end
 local CinematicGui = {["Enabled"] = false}
 function hideui(bool2)
 	local bool = not bool2
-	if (CinematicGui["Enabled"] and (bedwars["ClientStoreHandler"]:getState().App.shownApp == 5 or bedwars["ClientStoreHandler"]:getState().App.shownApp == 4)) or (GuiLibrary["MainGui"]["ClickGui"].Enabled) then
+	if (CinematicGui["Enabled"] and (bedwars["ClientStoreHandler"]:getState().App.shownApp == 5 or bedwars["ClientStoreHandler"]:getState().App.shownApp == 4)) or (GuiLibrary["MainGui"]["ClickGui"].Visible) then
 		game:GetService("UserInputService").MouseIconEnabled = true
 	else
 		game:GetService("UserInputService").MouseIconEnabled = bool
@@ -986,3 +986,69 @@ local notifications = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"]
 	["Function"]= function(callback) notifications["Enabled"] = callback end,
 	["HoverText"] = "Sends you a notification when certain actions happen"
 })
+
+runcode(function()
+	local posmodify = {["Enabled"] = false}
+	local tpback = {["Enabled"] = false}
+	local tpbackdelay = {["Value"] = 1}
+	local x = {["Value"] = 0}
+	local y = {["Value"] = 0}
+	local z = {["Value"] = 0}
+	posmodify = GuiLibrary["ObjectsThatCanBeSaved"]["BlatantWindow"]["Api"].CreateOptionsButton({
+		["Name"] = "Clip",
+		["Function"] = function(callback)
+			if callback then
+				local old = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+				local pos = CFrame.new(x["Value"], y["Value"], -z["Value"])
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * pos
+				if tpback["Enabled"] then
+					spawn(function()
+						wait(tpbackdelay["Value"] / 20)
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = old
+					end)
+				end
+				posmodify["ToggleButton"](false)
+			end
+		end,
+		["HoverText"] = "Teleports you a set amount of studs in selected direction(s),\nUse with caution and delays!"
+	})
+	xpos = posmodify.CreateSlider({
+		["Name"] = "Sideways",
+		["Min"] = -10,
+		["Max"] = 10,
+		["Function"] = function(val)
+			x["Value"] = val
+		end,
+		["Default"] = 0
+	})
+	ypos = posmodify.CreateSlider({
+		["Name"] = "Y",
+		["Min"] = -12,
+		["Max"] = 12,
+		["Function"] = function(val)
+			y["Value"] = val
+		end,
+		["Default"] = 0
+	})
+	zpos = posmodify.CreateSlider({
+		["Name"] = "Forwards",
+		["Min"] = -10,
+		["Max"] = 10,
+		["Function"] = function(val)
+			z["Value"] = val
+		end,
+		["Default"] = 0
+	})
+	tpback = posmodify.CreateToggle({
+		["Name"] = "Teleport Back",
+		["Function"] = function(callback) end,
+		["Default"] = false,
+ 	})
+	 tpbackdelay = posmodify.CreateSlider({
+		["Name"] = "Teleport Back Delay",
+		["Min"] = 0,
+		["Max"] = 10,
+		["Function"] = function(val) end,
+		["Default"] = 2
+	 })
+end)
