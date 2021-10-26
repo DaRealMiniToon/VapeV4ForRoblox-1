@@ -1,2 +1,2 @@
-local bedwarsLatest = "aVersionHere"
+local bedwarsLatest = "2021-10-25T23:51:47.9146563Z"
 return bedwarsLatest
