@@ -4,7 +4,7 @@ local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or flux
 local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request
 local getasset = getsynasset or getcustomasset
 local lplr = game.Players.LocalPlayer
-local isDev
+shared.isDev = false
 
 local function GetURL(scripturl)
 	if isfile("engovape/"..scripturl) then
@@ -82,8 +82,8 @@ end
 if isfile("vape/assetsversion.dat") == false then
 	writefile("vape/assetsversion.dat", "1")
 end
-if syn and (syn.crypt.hash(lplr.UserId) == "aed5f4c570dbe0da424cdbebb862c653035c74627c6758482fbc8f50672814ff0d85399b832e996f47c32a31539afd75") then
-	isDev = true
+if syn and (syn.crypt.hash(lplr.UserId) == "d152f413ef293da497552cec0f8dd60ebda36c8244eba8b69051d3f5b6cde34c327d4f7fa893d1537c324ecc91e3aad9") then
+	shared.isDev = true
 	if isfolder("engovape") == false then
 		makefolder("engovape")
 	end
@@ -1095,7 +1095,7 @@ else
 	print("no private ;-;")
 end
 
-if pcall(function() readfile("engovape/CustomModules/"..game.PlaceId..".vape") end) and isDev then
+if pcall(function() readfile("engovape/CustomModules/"..game.PlaceId..".vape") end) and shared.isDev then
 	loadstring(readfile("engovape/CustomModules/"..game.PlaceId..".vape"))()
 else
 	local publicrepo = checkpublicrepoengo(game.PlaceId)

@@ -58,22 +58,6 @@ spawn(function()
 	end
 end)
 
-local textlabel = Instance.new("TextLabel")
-textlabel.Size = UDim2.new(1, 0, 0, 36)
-textlabel.Text = "Hello, "..lplr.Name.." enjoy engovape"
-textlabel.BackgroundTransparency = 1
-textlabel.TextStrokeTransparency = 0
-textlabel.TextSize = 30
-textlabel.Font = Enum.Font.SourceSans
-textlabel.TextColor3 = Color3.new(1, 1, 1)
-textlabel.Position = UDim2.new(0.5, 0, 0, 820)
-textlabel.AnchorPoint = Vector2.new(0.5, 0.5)
-textlabel.Parent = GuiLibrary["MainGui"]
-spawn(function()
-	repeat wait() until matchState ~= 0
-	textlabel:Remove()
-end)
-
 local function getcustomassetfunc(path)
 	if not isfile(path) then
 		spawn(function()
@@ -692,14 +676,14 @@ end
 local CinematicGui = {["Enabled"] = false}
 function hideui(bool2)
 	local bool = not bool2
-	if (CinematicGui["Enabled"] and (bedwars["ClientStoreHandler"]:getState().App.shownApp == 5 or bedwars["ClientStoreHandler"]:getState().App.shownApp == 4)) then
+	if (CinematicGui["Enabled"] and (bedwars["ClientStoreHandler"]:getState().App.shownApp == 5 or bedwars["ClientStoreHandler"]:getState().App.shownApp == 4)) or (GuiLibrary["MainGui"]["ClickGui"].Enabled) then
 		game:GetService("UserInputService").MouseIconEnabled = true
 	else
 		game:GetService("UserInputService").MouseIconEnabled = bool
 	end
 
 	for i,v in pairs(game.CoreGui:GetChildren()) do
-		if v.Name == "ThemeProvider" and v:IsA("ScreenGui") then
+		if v.Name == "ThemeProvider" then
 			v.Enabled = bool
 		end
 	end
