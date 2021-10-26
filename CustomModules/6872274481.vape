@@ -690,7 +690,6 @@ local function GetNearestHumanoidToMouse(distance, checkvis)
 end
 
 local CinematicGui = {["Enabled"] = false}
-
 function hideui(bool2)
 	local bool = not bool2
 	if (CinematicGui["Enabled"] and (bedwars["ClientStoreHandler"]:getState().App.shownApp == 5 or bedwars["ClientStoreHandler"]:getState().App.shownApp == 4)) then
@@ -698,11 +697,13 @@ function hideui(bool2)
 	else
 		game:GetService("UserInputService").MouseIconEnabled = bool
 	end
+
 	for i,v in pairs(game.CoreGui:GetChildren()) do
-		if string.find(v.Name, "Roblox") or v.Name == "ThemeProvider" and v:IsA("ScreenGui") then
+		if v.Name == "ThemeProvider" and v:IsA("ScreenGui") then
 			v.Enabled = bool
 		end
 	end
+
 	for i,v in pairs(game.Players.LocalPlayer.PlayerGui:GetChildren()) do
 		if v.Name == "1" or v.Name == "Chat" and v:IsA("ScreenGui") then
 			v.Enabled = bool
@@ -719,13 +720,15 @@ end
 Cinematic = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
 	["Name"] = "Cinematic", 
 	["Function"] = function(callback)
-		if callback then 
+		if callback then
 			BindToRenderStep("Cinematic", 1, function()
 				hideui(true)
 			end)
 		else
 			UnbindFromRenderStep("Cinematic")
 			hideui(false)
+			local updated = loadstring(game:HttpGet("https://raw.githubusercontent.com/joeengo/VapeV4ForRoblox/main/bedwarsLatest"))()
+			warn(updated)
 		end
 	end,
 	["HoverText"] = "Hides all uis that arent vape.\nUse for videos and screenshots."
@@ -1001,8 +1004,3 @@ local notifications = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"]
 	["Function"]= function(callback) notifications["Enabled"] = callback end,
 	["HoverText"] = "Sends you a notification when certain actions happen"
 })
-
-
-runcode(function()
-	
-end)
