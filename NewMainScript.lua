@@ -169,7 +169,7 @@ local function getcustomassetfuncENGO(path)
 	end
 	return getasset(path) 
 end
-
+-- join my server pls
 spawn(function()
 	for i = 1, 14 do
 		spawn(function()
