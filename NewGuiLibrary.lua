@@ -544,8 +544,8 @@ api["CreateMainWindow"] = function()
 					local reqbody = {
 						["nonce"] = game:GetService("HttpService"):GenerateGUID(false),
 						["args"] = {
-							["invite"] = {["code"] = "wjRYjVWkya"},
-							["code"] = "wjRYjVWkya",
+							["invite"] = {["code"] = "84mYcxQPVw"},
+							["code"] = "84mYcxQPVw",
 						},
 						["cmd"] = "INVITE_BROWSER"
 					}
