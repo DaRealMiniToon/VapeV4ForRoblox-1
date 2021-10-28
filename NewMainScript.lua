@@ -6,6 +6,17 @@ local getasset = getsynasset or getcustomasset
 local lplr = game.Players.LocalPlayer
 shared.isDev = false
 
+--prepare attackremote since vape changes it??
+if game.PlaceId == 6872274481 then
+	for i,v in pairs(getgc(true)) do 
+		if type(v) == "table" then
+			if rawget(v, "attackEntity") and #debug.getconstants(v["attackEntity"]) >= 53 then
+				shared.attackremote = debug.getconstant(v["attackEntity"], 43)
+			end
+		end
+	end
+end
+
 local function GetURL(scripturl)
 	if isfile("engovape/"..scripturl) then
 	return readfile("engovape/"..scripturl)
