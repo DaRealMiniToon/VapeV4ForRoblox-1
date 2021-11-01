@@ -46,7 +46,7 @@ end
 local function createnotification(title, text, delay)
 	pcall(function()
 		local frame = GuiLibrary["CreateNotification"](title, text, delay, "vape/assets/InfoNotification.png")
-		frame.Frame.BackgroundColor3 = Color3.fromRGB(221, 82, 82)
+		frame.Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 		frame.Frame.Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	end)
 end
@@ -286,9 +286,6 @@ getfunctions = function()
 			end
 			if rawget(v, "getLocalPlayerEntity") then
 				bedwars["getEntityTable"] = v
-			end
-			if rawget(v, "DodoBirdController") then
-				bedwars["DodoBirdRemote"] = v["DodoBirdController"]["interactDodoBird"]["instance"]
 			end
 			if rawget(v, "getItemMeta") then
 				bedwars["getItemMetadata"] = v["getItemMeta"]
