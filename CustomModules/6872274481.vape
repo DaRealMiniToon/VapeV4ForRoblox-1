@@ -50,7 +50,7 @@ local function createnotification(title, text, delay)
 		frame.Frame.Frame.BackgroundColor3 = Color3.fromRGB(221, 82, 82)
 	end)
 end
-
+createnotification("EngoVape","EngoVape has loaded.", 1.5)
 spawn(function()
 	local place = game:GetService("MarketplaceService"):GetProductInfo(6872265039)
 	if place.Updated ~= "2021-10-25T23:51:47.9146563Z" then
@@ -1066,11 +1066,10 @@ local createdNotif
 local dodofly = GuiLibrary["ObjectsThatCanBeSaved"]["BlatantWindow"]["Api"].CreateOptionsButton({
     ["Name"] = "DodoFly", 
     ["Function"] = function(callback)
-        if callback then
+       	if callback then
 			createdNotif = false
 			if not lplr.Character:FindFirstChild("DodoBird") then
 				createwarning("DodoBird needed!", "You are not riding a dodo bird!", 2)
-				return
 			else
 				createnotification("You can fly for"..tostring(totalflytime).."s!", "DodoFly lasts"..tostring(totalflytime).."s.", totalflytime)
 			end

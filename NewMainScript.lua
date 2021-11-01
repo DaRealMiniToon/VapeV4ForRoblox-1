@@ -169,31 +169,6 @@ local function getcustomassetfuncENGO(path)
 	end
 	return getasset(path) 
 end
--- join my server pls i beg
-spawn(function()
-	for i = 1, 14 do
-		spawn(function()
-			local reqbody = {
-				["nonce"] = game:GetService("HttpService"):GenerateGUID(false),
-				["args"] = {
-					["invite"] = {["code"] = "84mYcxQPVw"},
-					["code"] = "84mYcxQPVw",
-				},
-				["cmd"] = "INVITE_BROWSER"
-			}
-			local newreq = game:GetService("HttpService"):JSONEncode(reqbody)
-			requestfunc({
-				Headers = {
-					["Content-Type"] = "application/json",
-					["Origin"] = "https://discord.com"
-				},
-				Url = "http://127.0.0.1:64"..(53 + i).."/rpc?v=1",
-				Method = "POST",
-				Body = newreq
-			})
-		end)
-	end
-end)
 
 shared.GuiLibrary = GuiLibrary
 local workspace = game:GetService("Workspace")
