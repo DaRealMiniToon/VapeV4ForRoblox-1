@@ -47,13 +47,13 @@ local function createnotification(title, text, delay)
 	pcall(function()
 		local frame = GuiLibrary["CreateNotification"](title, text, delay, "vape/assets/InfoNotification.png")
 		frame.Frame.BackgroundColor3 = Color3.fromRGB(221, 82, 82)
-		frame.Frame.Frame.BackgroundColor3 = Color3.fromRGB(221, 82, 82)
+		frame.Frame.Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	end)
 end
 createnotification("EngoVape","EngoVape has loaded.", 1.5)
 spawn(function()
 	local place = game:GetService("MarketplaceService"):GetProductInfo(6872265039)
-	if place.Updated ~= "2021-10-25T23:51:47.9146563Z" then
+	if place.Updated ~= "2021-11-01T21:16:36.6294972Z" then
 		createwarning("Bedwars has updated!", place.Updated, 10)
 	end
 end)
@@ -1052,83 +1052,3 @@ runcode(function()
 		["Default"] = 2
 	 })
 end)
-
-local dodoflyspeed = {["Value"] = 1}
-local dodoflyverticalspeed = {["Value"] = 1}
-local dodoflyupanddown = {["Enabled"] = true}
-local dodoflyposy = 0
-local dodoflyup = false
-local dodoflydown = false
-local dodoflypress
-local dodoflyendpress
-local totalflytime = 3.5
-local createdNotif
-local dodofly = GuiLibrary["ObjectsThatCanBeSaved"]["BlatantWindow"]["Api"].CreateOptionsButton({
-    ["Name"] = "DodoFly", 
-    ["Function"] = function(callback)
-       	if callback then
-			createdNotif = false
-			if not lplr.Character:FindFirstChild("DodoBird") then
-				createwarning("DodoBird needed!", "You are not riding a dodo bird!", 2)
-			else
-				createnotification("You can fly for"..tostring(totalflytime).."s!", "DodoFly lasts"..tostring(totalflytime).."s.", totalflytime)
-			end
-            if isAlive() then
-                dodoflyposy = lplr.Character.HumanoidRootPart.CFrame.p.Y
-            end
-            dodoflypress = game:GetService("UserInputService").InputBegan:connect(function(input1)
-                if dodoflyupanddown["Enabled"] and game:GetService("UserInputService"):GetFocusedTextBox() == nil then
-                    if input1.KeyCode == Enum.KeyCode.Space then
-                        dodoflyup = true
-                    end
-                    if input1.KeyCode == Enum.KeyCode.LeftShift then
-                        dodoflydown = true
-                    end
-                end
-            end)
-            dodoflyendpress = game:GetService("UserInputService").InputEnded:connect(function(input1)
-                if input1.KeyCode == Enum.KeyCode.Space then
-                    dodoflyup = false
-                end
-                if input1.KeyCode == Enum.KeyCode.LeftShift then
-                    dodoflydown = false
-                end
-            end)
-            BindToRenderStep("dodofly", 1, function(delta) 
-                if isAlive() and lplr.Character:FindFirstChild("DodoBird") then
-					if (bodyvelododofly ~= nil) then
-						bodyvelododofly:Remove()
-					end
-					if dodoflyup then
-						dodoflyposy = dodoflyposy + (1 * (math.clamp(dodoflyverticalspeed["Value"] - 16, 1, 150) * delta))
-					end
-					if dodoflydown then
-						dodoflyposy = dodoflyposy - (1 * (math.clamp(dodoflyverticalspeed["Value"] - 16, 1, 150) * delta))
-					end
-					local dodoflypos = (lplr.Character.Humanoid.MoveDirection * (math.clamp(dodoflyspeed["Value"] - 16, 1, 150) * delta))
-					lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + Vector3.new(dodoflypos.X, (dodoflyposy - lplr.Character.HumanoidRootPart.CFrame.p.Y), dodoflypos.Z)
-					lplr.Character.HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
-				elseif not lplr.Character:FindFirstChild("DodoBird") then
-					if not createdNotif then 
-						createdNotif = true
-						createwarning("DodoBird was unmounted!", "Module has been disabled.", 1)
-						dodofly["ToggleButton"](false, false)
-					end
-                end
-            end)
-        else
-            dodoflyup = false
-            dodoflydown = false
-            dodoflypress:Disconnect()
-            dodoflyendpress:Disconnect()
-            UnbindFromRenderStep("dodofly")
-        end
-    end,
-})
-dodoflyspeed = dodofly.CreateSlider({
-    ["Name"] = "Speed",
-    ["Min"] = 1,
-    ["Max"] = 150, 
-    ["Function"] = function(val) end,
-    ["Default"] = 40
-})

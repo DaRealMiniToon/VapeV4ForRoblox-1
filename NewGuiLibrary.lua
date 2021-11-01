@@ -1,4 +1,4 @@
-local VERSION = "v4.06 ENGO"
+local VERSION = "ENGO-1.02"
 local rainbowvalue = 0
 local cam = game:GetService("Workspace").CurrentCamera
 local getasset = getsynasset or getcustomasset
