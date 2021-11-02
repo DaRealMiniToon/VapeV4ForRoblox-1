@@ -7,10 +7,25 @@ local lplr = game.Players.LocalPlayer
 shared.isDev = false
 
 --prepare attackremote since vape changes it??
+
 if game.PlaceId == 6872274481 then
 	for i,v in pairs(getgc(true)) do 
 		if type(v) == "table" then
 			if rawget(v, "attackEntity") and #debug.getconstants(v["attackEntity"]) >= 53 then
+				for i,v in pairs(debug.getupvalues(v["attackEntity"])) do
+					print(tostring(v))
+					if tostring(v) == "AC" then
+						shared.AttackHashTable = v
+						for i2,v2 in pairs(v) do
+							if i2:find("constructor") == nil and i2:find("__index") == nil and i2:find("new") == nil then
+								shared.AttackHashFunction = v2
+								shared.AttachHashText = i2
+							end
+						end
+					end
+				end
+				oldattack = v["attackEntity"]
+				shared.backup_attack = oldattack
 				shared.attackremote = debug.getconstant(v["attackEntity"], 43)
 			end
 		end
