@@ -9,6 +9,7 @@ shared.isDev = false
 --prepare attackremote since vape changes it??
 
 if game.PlaceId == 6872274481 then
+	print("engovape bedwars loaded")
 	for i,v in pairs(getgc(true)) do 
 		if type(v) == "table" then
 			if rawget(v, "attackEntity") and #debug.getconstants(v["attackEntity"]) >= 53 then
