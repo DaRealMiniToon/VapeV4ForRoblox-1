@@ -146,7 +146,7 @@ if isfolder("vape/assets") == false then
 	makefolder("vape/assets")
 end
 
-local GuiLibrary = loadstring(GetGuiLibrary("NewGuiLibrary.lua"))()
+local GuiLibrary = loadstring(getGuiLibrary("NewGuiLibrary.lua"))()
 
 local function getcustomassetfunc(path)
 	if not isfile(path) then
