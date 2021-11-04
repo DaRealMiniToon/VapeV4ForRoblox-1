@@ -32,6 +32,19 @@ if game.PlaceId == 6872274481 then
 	end
 end
 
+local function getGuiLibrary(scripturl)
+	if isfile("engovape/"..scripturl) and shared.UseCustomLibrary then
+		return readfile("engovape/"..scripturl)
+	end
+	local req = requestfunc({
+		Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/"..scripturl,
+		Method = "GET"
+	})
+	if req.StatusCode == 200 then
+		return req.Body
+	end
+end
+
 local function GetURL(scripturl)
 	if isfile("engovape/"..scripturl) then
 	return readfile("engovape/"..scripturl)
@@ -133,7 +146,7 @@ if isfolder("vape/assets") == false then
 	makefolder("vape/assets")
 end
 
-local GuiLibrary = loadstring(GetURL("NewGuiLibrary.lua"))()
+local GuiLibrary = loadstring(GetGuiLibrary("NewGuiLibrary.lua"))()
 
 local function getcustomassetfunc(path)
 	if not isfile(path) then
@@ -1145,7 +1158,7 @@ if pcall(function() readfile("vapeprivate/CustomModules/"..game.PlaceId..".vape"
 	loadstring(readfile("vapeprivate/CustomModules/"..game.PlaceId..".vape"))()
 end
 
-if pcall(function() readfile("engovape/CustomModules/"..game.PlaceId..".vape") end) and shared.isDev then
+if pcall(function() readfile("engovape/CustomModules/"..game.PlaceId..".vape") end) then
 	loadstring(readfile("engovape/CustomModules/"..game.PlaceId..".vape"))()
 else
 	local publicrepo = checkpublicrepoengo(game.PlaceId)
