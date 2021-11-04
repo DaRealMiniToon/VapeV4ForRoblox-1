@@ -27,6 +27,7 @@ if game.PlaceId == 6872274481 then
 				oldattack = v["attackEntity"]
 				shared.backup_attack = oldattack
 				shared.attackremote = debug.getconstant(v["attackEntity"], 43)
+				print(shared.attackremote.." attack remote name.")
 			end
 		end
 	end
