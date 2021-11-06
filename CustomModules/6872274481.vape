@@ -1049,7 +1049,7 @@ runcode(function()
 	local x = {["Value"] = 0}
 	local y = {["Value"] = 0}
 	local z = {["Value"] = 0}
-	posmodify = GuiLibrary["ObjectsThatCanBeSaved"]["BlatantWindow"]["Api"].CreateOptionsButton({
+	posmodify = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
 		["Name"] = "Clip",
 		["Function"] = function(callback)
 			if callback then
@@ -1107,3 +1107,5 @@ runcode(function()
 		["Default"] = 2
 	 })
 end)
+
+GuiLibrary["RemoveObject"]("SpiderOptionsButton")
