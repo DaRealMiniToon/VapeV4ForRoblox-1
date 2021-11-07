@@ -779,6 +779,8 @@ CinematicGui = Cinematic.CreateToggle({
 runcode(function()
 	GuiLibrary["RemoveObject"]("HealthOptionsButton")
 
+	local Color = {["Value"] = 0.44}
+
 	local UserInfoUI = GuiLibrary.CreateCustomWindow({
 		["Name"] = "UserInfoGUI", 
 		["Icon"] = "vape/assets/TextGUIIcon1.png", 
@@ -800,7 +802,7 @@ runcode(function()
 	HealthText.Position = UDim2.new(0.5, 0, 0.605, 0)
 	HealthText.AnchorPoint = Vector2.new(0.5, 0.5)
 	HealthText.BackgroundTransparency = 1
-	HealthText.TextColor3 = Color3.fromRGB(255, 0, 0)
+	HealthText.TextColor3 = Color3.fromHSV(Color["Value"], 1, 1)
 	HealthText.Size = UDim2.new(0, 100, 0, 20)
 	HealthText.Visible = false
 	HealthText.Parent = UserInfoFrame
@@ -814,7 +816,7 @@ runcode(function()
 	WoolText.Position = UDim2.new(0.5, 0, 0.5, 90)
 	WoolText.AnchorPoint = Vector2.new(0.5, 0.5)
 	WoolText.BackgroundTransparency = 1
-	WoolText.TextColor3 = Color3.fromRGB(255, 136, 0)
+	WoolText.TextColor3 = Color3.fromHSV(Color["Value"], 1, 1)
 	WoolText.Size = UDim2.new(0, 100, 0, 20)
 	WoolText.Visible = false
 	WoolText.Parent = UserInfoFrame
@@ -828,7 +830,7 @@ runcode(function()
 	EmerText.Position = UDim2.new(0.5, 0, 0.5, 0)
 	EmerText.AnchorPoint = Vector2.new(0.5, 0.5)
 	EmerText.BackgroundTransparency = 1
-	EmerText.TextColor3 = Color3.fromRGB(92, 255, 119)
+	EmerText.TextColor3 = Color3.fromHSV(Color["Value"], 1, 1)
 	EmerText.Size = UDim2.new(0, 100, 0, 20)
 	EmerText.Visible = false
 	EmerText.Parent = UserInfoFrame
@@ -842,7 +844,7 @@ runcode(function()
 	DiamText.Position = UDim2.new(0.5, 0, 0.5, 0)
 	DiamText.AnchorPoint = Vector2.new(0.5, 0.5)
 	DiamText.BackgroundTransparency = 1
-	DiamText.TextColor3 = Color3.fromRGB(64, 185, 255)
+	DiamText.TextColor3 = Color3.fromHSV(Color["Value"], 1, 1)
 	DiamText.Size = UDim2.new(0, 100, 0, 20)
 	DiamText.Visible = false
 	DiamText.Parent = UserInfoFrame
@@ -856,7 +858,7 @@ runcode(function()
 	IronText.Position = UDim2.new(0.5, 0, 0.5, 0)
 	IronText.AnchorPoint = Vector2.new(0.5, 0.5)
 	IronText.BackgroundTransparency = 1
-	IronText.TextColor3 = Color3.fromRGB(194, 194, 194)
+	IronText.TextColor3 = Color3.fromHSV(Color["Value"], 1, 1)
 	IronText.Size = UDim2.new(0, 100, 0, 20)
 	IronText.Visible = false
 	IronText.Parent = UserInfoFrame
@@ -1013,6 +1015,17 @@ runcode(function()
 		end,
 		["Default"] = true
 	})
+
+	local Color = uiinfo.CreateColorSlider({
+		["Name"] = "Color",
+		["Function"] = function(arg)
+			IronText.TextColor3 = Color3.fromHSV(arg, 1, 1)
+			EmerText.TextColor3 = Color3.fromHSV(arg, 1, 1)
+			DiamText.TextColor3 = Color3.fromHSV(arg, 1, 1)
+			WoolText.TextColor3 = Color3.fromHSV(arg, 1, 1)
+			HealthText.TextColor3 = Color3.fromHSV(arg, 1, 1)
+		end
+	})
 end)
 
 local bedphrases = {"some retard broke ur bed", "yolo", "going bedless", "u only need 1 life right?", "1 life is enough", "watch out, 1 life left","go get em"}
@@ -1115,9 +1128,52 @@ runcode(function()
 end)
 
 GuiLibrary["RemoveObject"]("SpiderOptionsButton")
-
+--[[
 runcode(function()
-	local info = {["Enabled"] = false}
-	local infoname = {["Enabled"] = false}
-	local infoplrs = {["Enabled"] = false}
-end)
+	local Info = {["Enabled"] = false}
+	local InfoUI = GuiLibrary.CreateCustomWindow({
+		["Name"] = "InfoGUI", 
+		["Icon"] = "vape/assets/TextGUIIcon1.png", 
+		["IconSize"] = 21
+	})
+	local InfoFrame = Instance.new("Frame", InfoUI.GetCustomChildren())
+	InfoFrame.Size = UDim2.new(0, 100, 0, 100)
+	InfoFrame.Position = UDim2.new(0.5, 0, 0, 0)
+	InfoFrame.AnchorPoint = Vector2.new(0.5, 0)
+	InfoFrame.Transparency = 1
+
+	local UserInfoListLayout = Instance.new("UIListLayout", InfoFrame)
+
+	local Text = Instance.new("TextLabel")
+	Text.Font = Enum.Font.SourceSans
+	Text.TextSize = 20
+	Text.Text = ""
+	Text.Position = UDim2.new(0.5, 0, 0.605, 0)
+	Text.AnchorPoint = Vector2.new(0.5, 0.5)
+	Text.BackgroundTransparency = 1
+	Text.TextColor3 = Color3.fromHSV(Color["Value"], 1, 1)
+	Text.Size = UDim2.new(0, 100, 0, 20)
+	Text.Visible = false
+	Text.Parent = InfoFrame
+	Text.TextStrokeColor3 = Color3.new(0,0,0)
+	Text.TextStrokeTransparency = 0.1
+
+	local Info = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
+		["Name"] = "Info",
+		["Function"] = function(callback) 
+		
+		end,
+		["HoverText"] = "Info about the current game."
+	})
+
+	local Color = uiinfo.CreateColorSlider({
+		["Name"] = "Color",
+		["Function"] = function(arg)
+			IronText.TextColor3 = Color3.fromHSV(arg, 1, 1)
+			EmerText.TextColor3 = Color3.fromHSV(arg, 1, 1)
+			DiamText.TextColor3 = Color3.fromHSV(arg, 1, 1)
+			WoolText.TextColor3 = Color3.fromHSV(arg, 1, 1)
+			HealthText.TextColor3 = Color3.fromHSV(arg, 1, 1)
+		end
+	})
+end)]]
