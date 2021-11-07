@@ -778,10 +778,17 @@ CinematicGui = Cinematic.CreateToggle({
 
 runcode(function()
 	GuiLibrary["RemoveObject"]("HealthOptionsButton")
-	local UserInfoFrame = Instance.new("Frame", GuiLibrary["MainGui"])
-	UserInfoFrame.Size = UDim2.new(0, 100, 0, 200)
-	UserInfoFrame.Position = UDim2.new(0.5, 0, 0.625, 0)
-	UserInfoFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+
+	local UserInfoUI = GuiLibrary.CreateCustomWindow({
+		["Name"] = "UserInfoGUI", 
+		["Icon"] = "vape/assets/TextGUIIcon1.png", 
+		["IconSize"] = 21
+	})
+
+	local UserInfoFrame = Instance.new("Frame", UserInfoUI.GetCustomChildren())
+	UserInfoFrame.Size = UDim2.new(0, 100, 0, 100)
+	UserInfoFrame.Position = UDim2.new(0.5, 0, 0, 0)
+	UserInfoFrame.AnchorPoint = Vector2.new(0.5, 0)
 	UserInfoFrame.Transparency = 1
 
 	local UserInfoListLayout = Instance.new("UIListLayout", UserInfoFrame)
@@ -864,9 +871,9 @@ runcode(function()
 	local uiinfoemer = {["Enabled"] = false}
 	local uiinfo = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
 		["Name"] = "UserInfo", 
-		["Function"] = function(callback) 
+		["Function"] = function(callback)
+			UserInfoUI.SetVisible(callback)
 			if callback then
-				print(callback, uiinfoiron["Enabled"], uiinfowool["Enabled"], uiinfohealth["Enabled"])
 				EmerText.Visible = uiinfoemer["Enabled"]
 				DiamText.Visible = uiinfodiam["Enabled"]
 				IronText.Visible = uiinfoiron["Enabled"]
@@ -1008,21 +1015,20 @@ runcode(function()
 	})
 end)
 
-
-
-
-
 local bedphrases = {"some retard broke ur bed", "yolo", "going bedless", "u only need 1 life right?", "1 life is enough", "watch out, 1 life left","go get em"}
 local killphrases = {"L to","assassinated","destroyed","rip","annihilated","obliterated","killed","get down","death successfully","skill issue","L noobie","gg ez","u mad","get sh*t on","garbage","get ez'ed","finessed"}
 local notifications = {["Enabled"] = false}
 
-game.Workspace.Map.ChildRemoved:Connect(function(child)
-	print(child.Name)
-	if child == getBed() and notifications["Enabled"] then
-		createnotification("Your bed was broken!", bedphrases[math.random(1, #bedphrases)], 2)
- 	end
+bedwars["ClientHandler"]:WaitFor("BedwarsBedBreak"):andThen(function(p13)
+	p13:Connect(function(p14)
+		if notifications["Enabled"] then
+			local team = p14.brokenBedTeam.displayName
+			if team == lplr.Team.Name then
+				createnotification("Bed broken!", bedphrases[math.random(1, #bedphrases)], 2)
+			end
+		end
+	end)
 end)
-
 
 bedwars["ClientHandler"]:WaitFor("EntityDeathEvent"):andThen(function(p6)
 	p6:Connect(function(p7)
@@ -1109,3 +1115,9 @@ runcode(function()
 end)
 
 GuiLibrary["RemoveObject"]("SpiderOptionsButton")
+
+runcode(function()
+	local info = {["Enabled"] = false}
+	local infoname = {["Enabled"] = false}
+	local infoplrs = {["Enabled"] = false}
+end)
