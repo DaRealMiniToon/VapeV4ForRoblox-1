@@ -730,9 +730,8 @@ local function GetNearestHumanoidToMouse(distance, checkvis)
     end
     return returnedplayer
 end
-
+local hitrealremote =  bedwars["ClientHandler"]:Get(getremote(debug.getconstants(shared.backup_attack)))["instance"]
 function hitPlayer(plr)
-	local hitrealremote =  bedwars["ClientHandler"]:Get(debug.getconstant(shared.backup_attack, 44))["instance"]
 	hitrealremote:InvokeServer({
 		["weapon"] = getSword()["tool"],
 		["entityInstance"] = plr.Character,
