@@ -325,7 +325,7 @@ getfunctions = function()
 			end
 			if rawget(v, "calculateImportantLaunchValues") then
 				bedwars["BowTable"] = v
-				--bedwars["ShootProjectile"] = debug.getconstant(debug.getupvalues(v["launchProjectile"])[2], 30)
+				bedwars["ShootProjectile"] = getremote(debug.getconstants(debug.getupvalues(v["launchProjectile"])[2]))
 			end
 			if rawget(v, "kbDirectionStrength") then
 				bedwars["KnockbackTable"] = v
