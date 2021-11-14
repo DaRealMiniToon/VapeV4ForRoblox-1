@@ -1,3 +1,5 @@
+repeat wait() until game:IsLoaded()
+
 local VERSION = "ENGO-1.02"
 
 local GuiLibrary = shared.GuiLibrary
@@ -68,6 +70,8 @@ GuiLibrary["MainGui"].ClickGui.Version.Text = VERSION
 GuiLibrary["MainGui"].ClickGui.Version.Position = UDim2.new(1, -(vertextsize.X) - 20, 1, -25)
 GuiLibrary["MainGui"].ClickGui.Version.Text = VERSION
 GuiLibrary["MainGui"].ClickGui.Version.Position = UDim2.new(1, -(vertextsize.X) - 20, 1, -25)
+
+
 
 local RenderStepTable = {}
 local function BindToRenderStep(name, num, func)
@@ -321,7 +325,7 @@ getfunctions = function()
 			end
 			if rawget(v, "calculateImportantLaunchValues") then
 				bedwars["BowTable"] = v
-				bedwars["ShootProjectile"] = debug.getconstant(debug.getupvalues(v["launchProjectile"])[2], 30)
+				--bedwars["ShootProjectile"] = debug.getconstant(debug.getupvalues(v["launchProjectile"])[2], 30)
 			end
 			if rawget(v, "kbDirectionStrength") then
 				bedwars["KnockbackTable"] = v
@@ -727,6 +731,22 @@ local function GetNearestHumanoidToMouse(distance, checkvis)
     return returnedplayer
 end
 
+function hitPlayer(plr)
+	local hitrealremote =  bedwars["ClientHandler"]:Get(debug.getconstant(shared.backup_attack, 44))["instance"]
+	hitrealremote:InvokeServer({
+		["weapon"] = getSword()["tool"],
+		["entityInstance"] = plr.Character,
+		["validate"] = {
+			["raycast"] = {
+				["cameraPosition"] = hashvec(cam.CFrame.p), 
+				["cursorDirection"] = hashvec(Ray.new(cam.CFrame.p, plr.Character.HumanoidRootPart.Position).Unit.Direction)
+			},
+			["targetPosition"] = hashvec(plr.Character.HumanoidRootPart.Position),
+			["selfPosition"] = hashvec(lplr.Character.HumanoidRootPart.Position)
+		}
+	})
+end
+
 local CinematicGui = {["Enabled"] = false}
 function hideui(bool2)
 	local bool = not bool2
@@ -1126,54 +1146,3 @@ runcode(function()
 		["Default"] = 2
 	 })
 end)
-
-GuiLibrary["RemoveObject"]("SpiderOptionsButton")
---[[
-runcode(function()
-	local Info = {["Enabled"] = false}
-	local InfoUI = GuiLibrary.CreateCustomWindow({
-		["Name"] = "InfoGUI", 
-		["Icon"] = "vape/assets/TextGUIIcon1.png", 
-		["IconSize"] = 21
-	})
-	local InfoFrame = Instance.new("Frame", InfoUI.GetCustomChildren())
-	InfoFrame.Size = UDim2.new(0, 100, 0, 100)
-	InfoFrame.Position = UDim2.new(0.5, 0, 0, 0)
-	InfoFrame.AnchorPoint = Vector2.new(0.5, 0)
-	InfoFrame.Transparency = 1
-
-	local UserInfoListLayout = Instance.new("UIListLayout", InfoFrame)
-
-	local Text = Instance.new("TextLabel")
-	Text.Font = Enum.Font.SourceSans
-	Text.TextSize = 20
-	Text.Text = ""
-	Text.Position = UDim2.new(0.5, 0, 0.605, 0)
-	Text.AnchorPoint = Vector2.new(0.5, 0.5)
-	Text.BackgroundTransparency = 1
-	Text.TextColor3 = Color3.fromHSV(Color["Value"], 1, 1)
-	Text.Size = UDim2.new(0, 100, 0, 20)
-	Text.Visible = false
-	Text.Parent = InfoFrame
-	Text.TextStrokeColor3 = Color3.new(0,0,0)
-	Text.TextStrokeTransparency = 0.1
-
-	local Info = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
-		["Name"] = "Info",
-		["Function"] = function(callback) 
-		
-		end,
-		["HoverText"] = "Info about the current game."
-	})
-
-	local Color = uiinfo.CreateColorSlider({
-		["Name"] = "Color",
-		["Function"] = function(arg)
-			IronText.TextColor3 = Color3.fromHSV(arg, 1, 1)
-			EmerText.TextColor3 = Color3.fromHSV(arg, 1, 1)
-			DiamText.TextColor3 = Color3.fromHSV(arg, 1, 1)
-			WoolText.TextColor3 = Color3.fromHSV(arg, 1, 1)
-			HealthText.TextColor3 = Color3.fromHSV(arg, 1, 1)
-		end
-	})
-end)]]
